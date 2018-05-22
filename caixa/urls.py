@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^retirada', views.retirada),
     url(r'^fechar', views.fechar),
     url(r'^inf_geral', views.inf_geral),
+    url(r'^inf_mens', views.inf_mens),
     ]

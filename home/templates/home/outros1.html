@@ -1,0 +1,30 @@
+﻿{% extends 'base.html' %}
+{% block body %}
+{% load staticfiles %}
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar menu-lateral">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/home/outros">Outros <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+         </nav>
+        </div>
+    </div>
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 main-fundo">
+    <section class="row text-center placeholders">
+        <div class="jumbotron busca">
+            <div class="container" >
+                <div class="form-group">
+                    <a class="" href="/servico"><img src="{% static '/img/servicos.png' %}" /></a>
+                    <a class="" href="/produto"><img src="{% static '/img/produtos.png' %}" /></a>
+                    <a class="" href="/funcionario"><img src="{% static '/img/func.png' %}" /></a>
+                    <a class="" href="/caixa"><img src="{% static '/img/caixa.png' %}" /></a>
+                    <a class="" href="/contas"><img src="{% static '/img/contas.png' %}" /></a>
+                 </div>
+            </div>
+        </div>
+    </section>
+</main>
+        {% endblock %}

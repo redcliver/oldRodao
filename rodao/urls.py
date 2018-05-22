@@ -17,7 +17,7 @@ admin.autodiscover()
 urlpatterns = [
     # Examples:
     url(r'^$', login, {'template_name': 'home/login.html'}),
-    url(r'^home', include('home.urls')),
+    url(r'^home/', include('home.urls')),
     url(r'^ordem/', include('ordem.urls')),
     url(r'^cliente/', include('cliente.urls')),
     url(r'^servico/', include('servico.urls')),

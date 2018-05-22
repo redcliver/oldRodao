@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import datetime
 from ordem.models import ordens
@@ -31,5 +32,19 @@ def home(request):
         n_contas =  contas
         n_produto = prod
         return render(request, 'home/index.html', {'title':'Home', 'n_ordem':n_ordem, 'n_contas':n_contas, 'hoje':hoje, 'n_produto':n_produto})
+    else:
+        return render(request, 'home/erro.html', {'title':'Erro'})
+
+def outros(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST' and request.POST.get('senha') != None:
+            password = request.POST.get('senha')
+            user = authenticate(username='igor', password=password)
+            if user is not None:
+                if user.is_active:
+                    return render(request, 'home/outros1.html', {'title':'Outros'})
+            msg = "Senha Invalida"
+            return render(request, 'home/index.html', {'title':'Outros', 'msg':msg})
+        return render(request, 'home/outros.html', {'title':'Outros'})
     else:
         return render(request, 'home/erro.html', {'title':'Erro'})

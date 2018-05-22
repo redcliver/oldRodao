@@ -92,7 +92,7 @@ def inf_mens(request):
         total_dim = 0
         total_cd = 0
         total_cc = 0
-        for a in ordens.objects.filter(estado=1, data_fechamento__lte=dia_1, data_fechamento__gt=dia_2).all():
+        for a in ordens.objects.filter (data_fechamento__lte=dia_1, data_fechamento__gt=dia_2).all():
             total_mens = total_mens + a.total
         for b in ordens.objects.filter(estado=2, data_fechamento__lte=dia_1, data_fechamento__gt=dia_2).all():
             rec_mens = rec_mens + b.total

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^fechar', views.fechar),
     url(r'^inf_geral', views.inf_geral),
     url(r'^inf_mens', views.inf_mens),
+    url(r'^inf_sem', views.inf_sem),
     ]

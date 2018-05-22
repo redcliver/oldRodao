@@ -39,7 +39,7 @@ def outros(request):
     if request.user.is_authenticated():
         if request.method == 'POST' and request.POST.get('senha') != None:
             password = request.POST.get('senha')
-            user = authenticate(username='igor', password=password)
+            user = authenticate(username='jean', password=password)
             if user is not None:
                 if user.is_active:
                     return render(request, 'home/outros1.html', {'title':'Outros'})

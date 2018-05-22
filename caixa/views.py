@@ -88,6 +88,7 @@ def inf_mens(request):
         dia_1 = datetime.today()
         dia_2 = dia_1 - timedelta(days=30)
         total_mens = 0
+        total_rec = 0
         rec_mens = 0
         total_dim = 0
         total_cd = 0
@@ -113,6 +114,7 @@ def inf_sem(request):
         dia_1 = datetime.today()
         dia_2 = dia_1 - timedelta(days=7)
         total_mens = 0
+        total_rec = 0
         rec_mens = 0
         total_dim = 0
         total_cd = 0

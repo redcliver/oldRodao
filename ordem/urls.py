@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^total_mes', views.Total_mes.as_view()),
     url(r'^confirm', views.confirm),
     url(r'^fechar', views.fechar),
+    url(r'^individual', views.individual),
+    url(r'^porcliente', views.porcliente),
+    url(r'^pag_mensal', views.pag_mensal),
     ]

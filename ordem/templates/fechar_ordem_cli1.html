@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block body %}
+{% load staticfiles %}
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar menu-lateral">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link " href="/ordem">Adicionar Ordem de Servico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/ordem/busca">Buscar Ordem de Servico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/ordem/fechar">Fechar Ordem de Servico</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 main-fundo">
+    <section class="row text-center placeholders">
+        <div class="jumbotron busca">
+            <h1>Fechar Ordem</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="cli_id" value="{{cli_obj.id}}">
+                <input type="hidden" name="mes" value="{{mes}}">
+                <input type="hidden" name="total" value="{{tot}}">
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        <label for="inputName">Cliente</label>
+                        <input type="text" class="form-control" value="{{cli_obj.nome}}" disabled>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-10">
+                        {% if mes == '01' %}
+                            <h4>Referente a JANEIRO</h4>
+                            <hr>
+                        {% elif mes == '02' %}
+                            <h4>Referente a FEVEREIRO</h4>
+                            <hr>
+                        {% elif mes == '03' %}
+                            <h4>Referente a MARCO</h4>
+                            <hr>
+                        {% elif mes == '04' %}
+                            <h4>Referente a ABRIL</h4>
+                            <hr>
+                        {% elif mes == '05' %}
+                            <h4>Referente a MAIO</h4>
+                            <hr>
+                        {% elif mes == '06' %}
+                            <h4>Referente a JUNHO</h4>
+                            <hr>
+                        {% elif mes == '07' %}
+                            <h4>Referente a JULHO</h4>
+                            <hr>
+                        {% elif mes == '08' %}
+                            <h4>Referente a AGOSTO</h4>
+                            <hr>
+                        {% elif mes == '09' %}
+                            <h4>Referente a SETEMBRO</h4>
+                            <hr>
+                        {% elif mes == '10' %}
+                            <h4>Referente a OUTUBRO</h4>
+                            <hr>
+                        {% elif mes == '11' %}
+                            <h4>Referente a NOVEMBRO</h4>
+                            <hr>
+                        {% elif mes == '12' %}
+                            <h4>Referente a DEZEMBRO</h4>
+                            <hr>
+                        {% endif %}
+                        <label>Prestados {{num}} servicos esse mes.</label><hr>
+                        <label>Total - R$ {{tot}}</label>
+                        <button type="submit" class="btn btn-primary float-right">Fechar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

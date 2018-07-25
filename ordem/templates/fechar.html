@@ -1,0 +1,35 @@
+﻿{% extends 'base.html' %}
+{% block body %}
+{% load staticfiles %}
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar menu-lateral">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a class="nav-link " href="/ordem">Adicionar Ordem de Servico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="/ordem/busca">Buscar Ordem de Servico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/ordem/fechar">Fechar Ordem de Servico</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+<main class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3 main-fundo">
+    <section class="row text-center placeholders">
+        <div class="jumbotron busca">
+            <h1>Pagamento</h1>
+            <form>
+                <div class="form-group col-md-10" style="margin-top: 10px;">
+                    <button type="submit" formaction="/ordem/individual" class="btn btn-primary">Individual</button>
+                    <button type="submit" formaction="/ordem/porcliente" class="btn btn-primary">Por cliente</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+{% endblock %}

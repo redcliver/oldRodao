@@ -297,6 +297,12 @@ def cancelar(request):
 
 def fechar(request):
     if request.user.is_authenticated():
+        return render(request, 'fechar.html', {'title':'Fechar Ordens'})        
+    else:
+        return render(request, 'home/erro.html', {'title':'Erro'})
+
+def individual(request):
+    if request.user.is_authenticated():
         clientes = cliente.objects.all().order_by('nome')
         ordens1 = ordens.objects.filter(estado=1).all().order_by('cliente_ordem')
         if request.method == 'GET' and request.GET.get('ordem_id') != None:
@@ -322,9 +328,67 @@ def fechar(request):
     else:
         return render(request, 'home/erro.html', {'title':'Erro'})
 
+def porcliente(request):
+    if request.user.is_authenticated():           
+        clientes = cliente.objects.all().order_by('nome')
+        if request.method == 'GET' and request.GET.get('cli_id') != None and request.GET.get('mes') == None:
+            mes = timezone.now().strftime('%m')
+            tot = 0
+            num = 0
+            cli_id = request.GET.get('cli_id')
+            cli_obj = cliente.objects.filter(id=cli_id).get()
+            for o in ordens.objects.filter(cliente_ordem=cli_obj, data_abertura__month=mes, estado=1).all():
+                tot = tot + o.total
+                num = num + 1
+            return render(request, 'fechar_ordem_cli1.html', {'title':'Fechar Ordens', 'cli_obj':cli_obj, 'tot':tot, 'mes':mes, 'num':num})
+        elif request.method == 'GET' and request.GET.get('cli_id') != None and request.GET.get('mes') != None:
+            mes = request.GET.get('mes')
+            tot = 0
+            num = 0
+            cli_id = request.GET.get('cli_id')
+            cli_obj = cliente.objects.filter(id=cli_id).get()
+            for o in ordens.objects.filter(cliente_ordem=cli_obj, data_abertura__month=mes, estado=1).all():
+                tot = tot + o.total
+                num = num + 1
+            return render(request, 'fechar_ordem_cli1.html', {'title':'Fechar Ordens', 'cli_obj':cli_obj, 'tot':tot, 'mes':mes, 'num':num})
+        elif request.method == 'POST' and request.POST.get('cli_id') != None and request.POST.get('mes') != None and request.POST.get('total') != '0':
+            cli_id = request.POST.get('cli_id')
+            mes = request.POST.get('mes')
+            return render(request, 'metodo_ordem1.html', {'title':'Fechar Ordens', 'cli_id':cli_id, 'mes':mes})
+        elif request.method == 'POST' and request.POST.get('cli_id') != None and request.POST.get('mes') != None and request.POST.get('total') == '0':
+            
+            return render(request, 'fechar.html', {'title':'Fechar Ordens'})
+        return render(request, 'fechar_ordem_cli.html', {'title':'Fechar Ordens', 'clientes':clientes})
+    else:
+        return render(request, 'home/erro.html', {'title':'Erro'})
+
+def pag_mensal(request):
+    if request.user.is_authenticated():
+        if request.method == 'POST' and request.POST.get('cli_id') != None and request.POST.get('mes') != None and request.POST.get('metodo') != None:
+            data = timezone.now()
+            cli_id = request.POST.get('cli_id')
+            mes = request.POST.get('mes')
+            metodo = request.POST.get('metodo')
+            cli_obj = cliente.objects.filter(id=cli_id).get()
+            for o in ordens.objects.filter(cliente_ordem=cli_obj, data_abertura__month=mes, estado=1).all():
+                o.estado = 2 
+                o.metodo = metodo
+                o.data_fechamento = data
+                o.save()
+                caixa = caixa_geral.objects.latest('id')
+                total = caixa.total + o.total
+                desc = "Ordem numero "+str(o.id)+"."
+                novo_caixa = caixa_geral(tipo=1, total=total, desc=desc)
+                novo_caixa.save()
+            msg = "Ordens finalizadas com sucesso"
+            return render(request, 'home/index.html', {'title':'Home', 'msg':msg})
+        return render(request, 'fechar_ordem_cli.html', {'title':'Fechar Ordens', 'clientes':clientes})
+    else:
+        return render(request, 'home/erro.html', {'title':'Erro'})
+
 def add_serv(request):
     if request.user.is_authenticated():
-        clientes = cliente.objects.all()
+        clientes = cliente.objects.all().order_by('nome')
         if request.method == 'POST' and request.POST.get('servico_id') != None and request.POST.get('produto_id') == None:
             ordem_id = request.POST.get('ordem_id')
             cliente_id = request.POST.get('cliente_id')
